@@ -14,20 +14,25 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String
-  password String
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
   firstName String?
-  lastName String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  lastName  String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  bookmark  Bookmark[]
 }
 
 model Bookmark {
-  id Int @id @default(autoincrement())
-  title String
+  id          Int      @id @default(autoincrement())
+  title       String
   description String?
-  link String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  link        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // connect bookmark to user
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 }
